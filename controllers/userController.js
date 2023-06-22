@@ -63,14 +63,14 @@ exports.confirm = async (req, res) => {
     let encryptedPassword = await bcrypt.hash(password, 5);
 
     const user = await User.create({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
+        firstName,
+        lastName,
+        email,
         password: encryptedPassword
     });
 
     const token = jwt.sign(
-        { id: user.id, email: data.email },
+        { id: user.id, email },
         process.env.TOKEN_KEY,
         {
             expiresIn: 365 * 24 * 60 * 60 * 1000,
