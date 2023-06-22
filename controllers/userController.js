@@ -26,7 +26,8 @@ exports.register = async (req, res) => {
       const token = jwt.sign(
         {firstName, lastName, email, password},
         process.env.TOKEN_KEY,
-        { expiresIn: 15 * 60 * 1000 }
+        { expiresIn: '600s' }
+      )
 
         const mailTemplate = require('../templates/verificationMailTemplate');
         const send = require('../services/mailer');
