@@ -6,16 +6,16 @@ const User = db.User;
 const nodemailer = require("nodemailer")
 
 
-exports.index = async (req, res) => {
-    res.status(200).json(
-        {
-            "message": process.env.API_PORT,
-            "status": "ok!"
-        }
-    );
-};
+// exports.index = async (req, res) => {
+//     res.status(200).json(
+//         {
+//             "message": process.env.API_PORT,
+//             "status": "ok!"
+//         }
+//     );
+// };
 
-exports.create = async (req, res) => {
+exports.register = async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
 
@@ -53,10 +53,12 @@ exports.create = async (req, res) => {
 };
 
 exports.confirm = async (req, res) => {
-    console.log(req.query.tkey)
+
+
+
 };
 
-const data = jwt.verify(req.query.tkey, process.env.TOKEN_KEY);
+    const { firstName, lastName, email, password} = req.user;
 
     let encryptedPassword = await bcrypt.hash(password, 5);
 

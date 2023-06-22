@@ -39,6 +39,6 @@ router.post("/logout", auth, userController.create);
 router.post("/register", validationRequest.register, userController.register);
 router.get("/confirm", validationRequest.confirm, authController.confirm);
 
-router.get("/", userController.confirm);
+// router.get("/", userController.confirm);
 
 module.exports = router;

@@ -119,4 +119,6 @@ exports.confirm = async (req, res, next) => {
     } catch (err) {
         return res.satus(401).send("Invalid token");
     }
+
+    return next();
 }
