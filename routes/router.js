@@ -36,8 +36,8 @@ router.post("/logout", auth, userController.create);
  *         description: Some server error
  *
  */
-router.post("/register", validationRequest.register, userController.create);
-router.post("/confirm", authController.login);
+router.post("/register", validationRequest.register, userController.register);
+router.get("/confirm", validationRequest.confirm, authController.confirm);
 
 router.get("/", userController.confirm);
 
