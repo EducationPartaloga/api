@@ -3,6 +3,7 @@ const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
 const auth = require("../middlewares/auth");
 const validationRequest = require('../requests/validationRequest');
+const hasUser = require('../middlewares/hasUser')
 
 const router = express.Router()
 
@@ -32,8 +33,8 @@ const router = express.Router()
  *         description: Some server error
  *
  */
-router.post("/register", validationRequest.register, userController.register);
+router.post("/register", validationRequest.register, hasUser.check, userController.register);
 
-router.get("/confirm", validationRequest.confirm, userController.confirm);
+router.get("/confirm", validationRequest.confirm, hasUser.check, userController.confirm);
 
 module.exports = router;

@@ -115,8 +115,10 @@ exports.register = async (req, res, next) => {
 
 exports.confirm = async (req, res, next) => {
     try {
-        req.user = jwt.verify(req.query.tkey, process.env.TOKEN_KEY);
+        req.body = jwt.verify(req.query.tkey, process.env.TOKEN_KEY);
+
     } catch (err) {
+        
         return res.satus(401).send("Invalid token");
     }
 

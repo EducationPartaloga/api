@@ -9,9 +9,9 @@ exports.register = async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
 
-    const oldUser = await User.findOne({ where: {email} });
+    // const oldUser = await User.findOne({ where: {email} });
 
-    if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
+    // if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
 
     password = await bcrypt.hash(password, 5);
 
@@ -48,10 +48,10 @@ exports.register = async (req, res) => {
 };
 
 exports.confirm = async (req, res) => {
-    let { firstName, lastName, email, password} = req.user;
+    let { firstName, lastName, email, password} = req.body;
 
-    const oldUser = await User.findOne({ where: {email} });
-    if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
+    // const oldUser = await User.findOne({ where: {email} });
+    // if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
 
     const user = await User.create({
         firstName,
