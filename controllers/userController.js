@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
         { expiresIn: '600s' }
       )
         console.log(token);
-        
+
         const mailTemplate = require('../templates/verificationMailTemplate');
         const send = require('../services/mailer');
 
@@ -38,7 +38,7 @@ exports.register = async (req, res) => {
         };
 
         send(options, (info)=> {
-                console.log("Email semd successfully");
+                console.log("Email send successfully");
                 console.log("MESSAGGE ID: ", info.messageId);
         })
 
