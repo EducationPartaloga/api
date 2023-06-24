@@ -5,15 +5,6 @@ const db = require("../models")
 const User = db.User;
 
 
-// exports.index = async (req, res) => {
-//     res.status(200).json(
-//         {
-//             "message": process.env.API_PORT,
-//             "status": "ok!"
-//         }
-//     );
-// };
-
 exports.register = async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
@@ -28,7 +19,8 @@ exports.register = async (req, res) => {
         process.env.TOKEN_KEY,
         { expiresIn: '600s' }
       )
-
+        console.log(token);
+        
         const mailTemplate = require('../templates/verificationMailTemplate');
         const send = require('../services/mailer');
 
@@ -38,10 +30,10 @@ exports.register = async (req, res) => {
         };
 
         const options = {
-            from: "TESTING <7718118@gmail.com>"
+            from: "TESTING <7718118@gmail.com>",
             to: email,
             subject: "Регистрация в приложении Instagram",
-            text: `Перейдите по ссылке 'https://instagram.lern.dev/api/v1/confirm?tkey=${token}'`
+            text: `Перейдите по ссылке 'https://instagram.lern.dev/api/v1/confirm?tkey=${token}'`,
             html: mailTemplate(data)
         };
 
@@ -54,11 +46,6 @@ exports.register = async (req, res) => {
 };
 
 exports.confirm = async (req, res) => {
-
-
-
-};
-
     const { firstName, lastName, email, password} = req.user;
 
     let encryptedPassword = await bcrypt.hash(password, 5);
@@ -82,13 +69,5 @@ exports.confirm = async (req, res) => {
     await user.save({ fields: ['token'] });
 
     return res.status(201).json;
-
-
-
-exports.update = async (req, res) => {
-    return res.send("NOT IMPLEMENTED: Site Home Page");
 };
 
-exports.delete = async (req, res) => {
-    return res.send("NOT IMPLEMENTED: Site Home Page");
-};
