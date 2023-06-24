@@ -13,6 +13,8 @@ exports.register = async (req, res) => {
 
     if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
 
+    password = await bcrypt.hash(password, 5);
+
 
       const token = jwt.sign(
         {firstName, lastName, email, password},
@@ -46,19 +48,20 @@ exports.register = async (req, res) => {
 };
 
 exports.confirm = async (req, res) => {
-    const { firstName, lastName, email, password} = req.user;
+    let { firstName, lastName, email, password} = req.user;
 
-    let encryptedPassword = await bcrypt.hash(password, 5);
+    const oldUser = await User.findOne({ where: {email} });
+    if (oldUser) return res.status(409).json({"message": "Такой пользователь уже существует"});
 
     const user = await User.create({
         firstName,
         lastName,
         email,
-        password: encryptedPassword
+        password
     });
 
     const token = jwt.sign(
-        { id: user.id, email },
+        { firstName, lastName, email, password },
         process.env.TOKEN_KEY,
         {
             expiresIn: 365 * 24 * 60 * 60 * 1000,
