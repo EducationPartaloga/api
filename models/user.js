@@ -1,6 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
-
+const BlackList = require('./blacklist');
 /**
  * @swagger
  * components:
@@ -10,7 +10,7 @@ const { Model } = require('sequelize');
  *       properties:
  *         id:
  *           type: integer
- *           description: ID пользователя
+ *           description: Id пользователя
  *         firstName:
  *           type: string
  *           maxLength: 30
@@ -38,24 +38,24 @@ const { Model } = require('sequelize');
  *           description: URL аватарки пользователя
  *         status:
  *           type: boolean
- *           description: Статус пользователя
+ *           description: Статус записи пользователя
  *         createdAt:
  *           type: string
- *           description: Время создания пользователя
+ *           description: Дата создания записи
  *         updatedAt:
- *           description: Время обновления данных пользователя
  *           type: string
+ *           description: Дата изменеия записи
  *       example:
+ *         id: 56
  *         firstName: "Jone"
  *         lastName: "Dou"
  *         email: "example@mail.com"
  *         password: "12345"
- *         token: "fyhjkfuhyfgyugbjukghlhuiihujhiuhujp"
- *         avatar: https://instagram.lern.dev/avatar.jpg
+ *         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiOiJwb2to"
+ *         avatar: "https://example.com/image.jpg"
  *         status: true
- *         createdAt: "2023-07-03"
- *         updatedAt: "2023-07-06"
- * 
+ *         updatedAt: "2023-06-18T16:22:32.561Z"
+ *         createdAt: "2023-06-18T16:22:32.422Z"
  */
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
@@ -103,15 +103,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
         },
-        verifyEmail: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        }
     }, {
         sequelize,
         modelName: 'User',
         timestamps: true,
+        associate: (models) => {
+            User.hasMany(models.BlackList, { foreignKey: 'userId'});
+        }
     });
-    
+
     return User;
 };

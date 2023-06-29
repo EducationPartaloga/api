@@ -23,13 +23,33 @@ const options = {
                 email: "dev@email.com",
             },
         },
+        components: {
+            securitySchemes: {
+                // Для использования как bearer token
+                // bearerAuth: {
+                //     type: 'http',
+                //     scheme: 'bearer',
+                //     bearerFormat: 'JWT',
+                // },
+
+                // Для использования как API Key
+                apiKeyAuth: {
+                    type: 'apiKey',
+                    in: 'header',
+                    name: 'authorization'
+                }
+            }
+        },
+        // security: [{
+        //     apiKeyAuth: []
+        // }],
         servers: [
             {
             url: "https://instagram.lern.dev/api/v1/",
             },
         ],
     },
-    apis: ["./routes/*.js", "./controllers/*.js ", "./requests/*.js", "./models/*.js"]
+    apis: ["./routes/*.js", "./controllers/*.js", "./middlewares/*.js", "./models/*.js"],
 };
 const specification = swaggerJsdoc(options);
 
